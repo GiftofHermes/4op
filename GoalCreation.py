@@ -145,16 +145,4 @@ def goal_creation(num_big,num_little):
     print('The goal is: ', goal)
     print('Numbers are',*bigs,*littles)
 
-#goal_creation(1,5)
-#goal_creation(1,5)
-#goal_creation(1,5)
-#goal_creation(1,5)
-#goal_creation(2,4)
-#goal_creation(2,4)
-#goal_creation(2,4)
-#goal_creation(0,6)
-#goal_creation(0,6)
-#goal_creation(0,6)
 
-for i in range(100):
-    goal_creation(0, 6)
