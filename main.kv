@@ -1,6 +1,8 @@
 #:kivy 1.10
 <MyButton@Button>:
     text: "None"
+<MyOp@Button>:
+    text: 'None'
 
 BoxLayout:
     orientation: "vertical"
@@ -48,18 +50,23 @@ BoxLayout:
             col_default_width:'80'
             col_force_default:'True'
             padding: '5'
-            Button:
+            MyOp:
+                op:1
                 text:'+'
-                on_release: app.on_op_pressed("+")
-            Button:
+                on_release: self.on_op_pressed()
+            MyOp:
+                op:2
                 text:'-'
-                on_release: app.on_op_pressed("-")
-            Button:
+                on_release: self.on_op_pressed()
+            MyOp:
+                op:3
                 text:'x'
-                on_release: app.on_op_pressed("x")
-            Button:
+                on_release: self.on_op_pressed()
+            MyOp:
+                op:4
                 text:'/'
-                on_release: app.on_op_pressed("/")
-            Button:
+                on_release: self.on_op_pressed()
+            MyOp:
+                op:5
                 text:'Break'
-                on_release: app.on_op_pressed("Break")
+                on_release: self.on_op_pressed()

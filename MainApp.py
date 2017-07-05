@@ -9,9 +9,19 @@ Window.size = (400, 400)
 
 from kivy.uix.button import Button
 
+Select_num = 0
 class MyButton(Button):
     def on_num_pressed(self):
-        self.disabled = True
+        Select_num = self.num
+        print(Select_num)
+
+Select_op = 0
+class MyOp(Button):
+    def on_op_pressed(self):
+        if Select_num != 0:
+            Select_op = self.op
+        print(Select_op)
+
 
 class MainApp(App):
     numbers = GoalCreation.goal_creation(1,5)
