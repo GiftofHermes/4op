@@ -4,23 +4,32 @@ kivy.require("1.10.0") # replace with your current kivy version !
 from kivy.app import App
 from kivy.properties import NumericProperty, ObjectProperty
 import GoalCreation
+import GoalCheck
 from kivy.core.window import Window
 Window.size = (400, 400)
 
 from kivy.uix.button import Button
 
-Select_num = 0
-class MyButton(Button):
-    def on_num_pressed(self):
-        Select_num = self.num
-        print(Select_num)
 
-Select_op = 0
+class MyButton(Button):
+    Select_num = 0
+    def on_num_pressed(self):
+        if MyButton.Select_num == self.num:
+            MyButton.Select_num = 0
+            MyOp.Select_op = 0
+        else:
+            if MyOp.Select_op != 0 or MyOp.Select_op != 5:
+                MyButton.Select_num = self.num
+            else:
+                
+
+
 class MyOp(Button):
+    Select_op = 0
     def on_op_pressed(self):
-        if Select_num != 0:
-            Select_op = self.op
-        print(Select_op)
+        if MyButton.Select_num != 0:
+            MyOp.Select_op = self.op
+        print(MyOp.Select_op)
 
 
 class MainApp(App):
