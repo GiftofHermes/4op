@@ -6,6 +6,7 @@ from kivy.properties import NumericProperty
 import GoalCreation
 from kivy.core.window import Window
 Window.size = (400, 400)
+import GoalCheck
 
 class MainApp(App):
     numbers = GoalCreation.goal_creation(1,5)
