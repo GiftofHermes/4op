@@ -1,4 +1,7 @@
 #:kivy 1.10
+<MyButton@Button>:
+    text: "None"
+
 BoxLayout:
     orientation: "vertical"
     Label:
@@ -10,18 +13,30 @@ BoxLayout:
         row_force_default:'True'
         col_default_width:'100'
         col_force_default:'True'
-        Button:
+        MyButton:
+            num: 1
             text: str(app.num1)
-        Button:
+            on_release: self.on_num_pressed()
+        MyButton:
+            num: 2
             text: str(app.num2)
-        Button:
+            on_release: self.on_num_pressed()
+        MyButton:
+            num: 3
             text: str(app.num3)
-        Button:
+            on_release: self.on_num_pressed()
+        MyButton:
+            num: 4
             text: str(app.num4)
-        Button:
+            on_release: self.on_num_pressed()
+        MyButton:
+            num: 5
             text: str(app.num5)
-        Button:
+            on_release: self.on_num_pressed()
+        MyButton:
+            num: 6
             text: str(app.num6)
+            on_release: self.on_num_pressed()
     AnchorLayout:
         anchor_x: 'right'
         anchor_y: 'bottom'
@@ -35,11 +50,16 @@ BoxLayout:
             padding: '5'
             Button:
                 text:'+'
+                on_release: app.on_op_pressed("+")
             Button:
                 text:'-'
+                on_release: app.on_op_pressed("-")
             Button:
                 text:'x'
+                on_release: app.on_op_pressed("x")
             Button:
                 text:'/'
+                on_release: app.on_op_pressed("/")
             Button:
                 text:'Break'
+                on_release: app.on_op_pressed("Break")
