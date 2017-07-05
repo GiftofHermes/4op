@@ -135,14 +135,5 @@ def goal_creation(num_big,num_little):
     if len(bigs) > 1:
         bigs = sorted(bigs, reverse= True)
 
-
-    if(goal-100) < 100:
-        print('one hundred: ')
-    else:
-        print('bigger than one hundred')
-
-
-    print('The goal is: ', goal)
-    print('Numbers are',*bigs,*littles)
-
+    return [goal,*bigs,*littles]
 

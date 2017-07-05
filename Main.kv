@@ -1,0 +1,45 @@
+#:kivy 1.10
+BoxLayout:
+    orientation: "vertical"
+    Label:
+        text: "The goal is %s" % app.goal
+    GridLayout:
+        cols:4
+        rows:2
+        row_default_height:'60'
+        row_force_default:'True'
+        col_default_width:'100'
+        col_force_default:'True'
+        Button:
+            text: str(app.num1)
+        Button:
+            text: str(app.num2)
+        Button:
+            text: str(app.num3)
+        Button:
+            text: str(app.num4)
+        Button:
+            text: str(app.num5)
+        Button:
+            text: str(app.num6)
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'bottom'
+        GridLayout:
+            cols:5
+            rows:1
+            row_default_height:'40'
+            row_force_default:'True'
+            col_default_width:'80'
+            col_force_default:'True'
+            padding: '5'
+            Button:
+                text:'+'
+            Button:
+                text:'-'
+            Button:
+                text:'x'
+            Button:
+                text:'/'
+            Button:
+                text:'Break'
