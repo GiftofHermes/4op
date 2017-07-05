@@ -2,34 +2,112 @@ import kivy
 kivy.require("1.10.0") # replace with your current kivy version !
 
 from kivy.app import App
-from kivy.properties import NumericProperty, ObjectProperty
+from kivy.properties import NumericProperty
+from kivy.graphics import Color
 import GoalCreation
 import GoalCheck
+
 from kivy.core.window import Window
-Window.size = (400, 400)
+Window.size = (360, 400)
 
 from kivy.uix.button import Button
 
+def get_child(children, id):
+    for child in children:
+        if child.num == id:
+            return child
+
+class MyButtonStateLog:
+    logs = []
+    def add(self, children):
+        states = []
+        for child in children:
+            state = MyButtonState(
+                child.num,
+                child.text,
+                child.disabled
+            )
+            states.append(state)
+        print("state logged")
+        print(states)
+        self.logs.append(states)
+
+    def pop(self):
+        return self.logs.pop()
+
+class MyButtonState:
+    num = 0
+    text = ""
+    disabled = None
+    def __init__(self, num, text, disabled):
+        self.num = num
+        self.text = text
+        self.disabled = disabled
 
 class MyButton(Button):
-    Select_num = 0
-    def on_num_pressed(self):
-        if MyButton.Select_num == self.num:
-            MyButton.Select_num = 0
-            MyOp.Select_op = 0
-        else:
-            if MyOp.Select_op != 0 or MyOp.Select_op != 5:
-                MyButton.Select_num = self.num
-            else:
-                
+    Select_num = None
+    stateLog = None
 
+    def on_num_pressed(self):
+        # deselect number
+        if MyButton.Select_num != None and MyButton.Select_num.num == self.num:
+            MyButton.Select_num = None
+            MyOp.Select_op = 0
+            self.background_color = 1,1,1,1
+        else:
+            # do the math
+            if MyOp.Select_op != 0 and MyOp.Select_op != 5:
+                # save the num state
+                if MyButton.stateLog == None:
+                    MyButton.stateLog = MyButtonStateLog()
+                MyButton.stateLog.add(self.parent.children)
+
+                MyButton.Select_num.disabled = True
+
+                newValue = int(get_child(self.parent.children, MyButton.Select_num.num).text)
+                if(MyOp.Select_op == 1):
+                    self.text = str(int(self.text) + newValue)
+                    MyButton.Select_num = None
+                    MyOp.Select_op = 0
+                elif(MyOp.Select_op == 2):
+                    #if does not substract properly abort or take abs
+                    self.text = str(newValue - int(self.text))
+                    MyButton.Select_num = None
+                    MyOp.Select_op = 0
+                elif(MyOp.Select_op == 3):
+                    self.text = str(int(self.text) * newValue)
+                    MyButton.Select_num = None
+                    MyOp.Select_op = 0
+                elif(MyOp.Select_op == 4):
+                    #to-do: if does not divide properly abort
+                    self.text = str(newValue / int(self.text))
+                    MyButton.Select_num = None
+                    MyOp.Select_op = 0
+            # select
+            else:
+                MyButton.Select_num = self
+                i = 1
+                while i < 6 :
+                    i+=1
+                    #self.parent.ids["num%d" % i].background_color = 1, 1, 1, 1
+
+                self.background_color = 1, 0, 0, 1
 
 class MyOp(Button):
     Select_op = 0
     def on_op_pressed(self):
-        if MyButton.Select_num != 0:
+        if self.op == 5:
+            children = self.parent.parent.parent.ids.numbers.children
+            if MyButton.stateLog != None:
+                states = MyButton.stateLog.pop()
+                for state in states:
+                    child = get_child(children, state.num)
+                    child.num = state.num
+                    child.text = state.text
+                    child.disabled = state.disabled
+                    child.background_color = 1, 1, 1, 1
+        elif MyButton.Select_num != None:
             MyOp.Select_op = self.op
-        print(MyOp.Select_op)
 
 
 class MainApp(App):
@@ -41,14 +119,6 @@ class MainApp(App):
     num4 = NumericProperty(numbers[4])
     num5 = NumericProperty(numbers[5])
     num6 = NumericProperty(numbers[6])
-
-    selected_num = 0
-
-    def on_num_pressed(self, id):
-        print("number %d pressed" % id)
-
-    def on_op_pressed(self, id):
-        print("op %s pressed" % id)
 
 if __name__ == '__main__':
     MainApp().run()

@@ -9,45 +9,54 @@ BoxLayout:
     Label:
         text: "The goal is %s" % app.goal
     GridLayout:
-        cols:4
-        rows:2
-        row_default_height:'60'
+        id: numbers
+        cols:3
+        rows:3
+        row_default_height:'50'
         row_force_default:'True'
-        col_default_width:'100'
+        col_default_width:'120'
         col_force_default:'True'
         MyButton:
+            id: num1
             num: 1
             text: str(app.num1)
             on_release: self.on_num_pressed()
         MyButton:
+            id: num2
             num: 2
             text: str(app.num2)
             on_release: self.on_num_pressed()
         MyButton:
+            id: num3
             num: 3
             text: str(app.num3)
             on_release: self.on_num_pressed()
         MyButton:
+            id: num4
             num: 4
             text: str(app.num4)
             on_release: self.on_num_pressed()
         MyButton:
+            id: num5
             num: 5
             text: str(app.num5)
             on_release: self.on_num_pressed()
         MyButton:
+            id: num6
             num: 6
             text: str(app.num6)
             on_release: self.on_num_pressed()
+
     AnchorLayout:
         anchor_x: 'right'
         anchor_y: 'bottom'
         GridLayout:
+            id:ops
             cols:5
             rows:1
             row_default_height:'40'
             row_force_default:'True'
-            col_default_width:'80'
+            col_default_width:'72'
             col_force_default:'True'
             padding: '5'
             MyOp:
