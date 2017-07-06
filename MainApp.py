@@ -59,6 +59,7 @@ class MyButton(Button):
             self.background_color = 1,1,1,1
         else:
             # do the math
+            #to-do: add victory chech to here
             if MyOp.Select_op != None:
                 # save the num state
                 if MyButton.stateLog == None:
@@ -95,12 +96,16 @@ class MyButton(Button):
                             MyButton.Select_num.disabled = False
                             MyButton.Select_num = None
                             MyOp.Select_op = None
+                            if(MyButtonStateLog.logs != []):
+                                MyButton.stateLog.pop()
                     else:
                          # to-do: add screen shake to indicate not being divisible
                          # is not divisible
                          MyButton.Select_num.disabled = False
                          MyButton.Select_num = None
                          MyOp.Select_op = None
+                         if (MyButtonStateLog.logs != []):
+                             MyButton.stateLog.pop()
 
             # deselect old number and select new number
             elif MyOp.Select_op == None and MyButton.Select_num != self and MyButton.Select_num != None:
