@@ -83,17 +83,25 @@ class MyButton(Button):
                     MyButton.Select_num = None
                     MyOp.Select_op = None
                 elif(MyOp.Select_op.op == 4):
-                    if newValue % int(self.text) == 0:
-                        #is divisible
-                        self.text = str(int(newValue / int(self.text)))
-                        MyButton.Select_num = None
-                        MyOp.Select_op = None
+                    if int(self.text) != 0:
+                        if newValue % int(self.text) == 0:
+                            #is divisible
+                            self.text = str(int(newValue / int(self.text)))
+                            MyButton.Select_num = None
+                            MyOp.Select_op = None
+                        else:
+                            #to-do: add screen shake to indicate not being divisible
+                            #is not divisible
+                            MyButton.Select_num.disabled = False
+                            MyButton.Select_num = None
+                            MyOp.Select_op = None
                     else:
-                        #to-do: add screen shake to indicate not being divisible
-                        #is not divisible
-                        MyButton.Select_num.disabled = False
-                        MyButton.Select_num = None
-                        MyOp.Select_op = None
+                         # to-do: add screen shake to indicate not being divisible
+                         # is not divisible
+                         MyButton.Select_num.disabled = False
+                         MyButton.Select_num = None
+                         MyOp.Select_op = None
+
             # deselect old number and select new number
             elif MyOp.Select_op == None and MyButton.Select_num != self and MyButton.Select_num != None:
                 MyButton.Select_num.background_color = 1,1,1,1
@@ -109,6 +117,16 @@ class MyOp(Button):
     def on_op_pressed(self):
         #Reverse last step from statelog
         if self.op == 5:
+            ops = self.parent.parent.parent.ids.ops.children
+            print(ops)
+            children = self.parent.parent.parent.ids.numbers.children
+            for child in ops:
+                child.background_color = 1,1,1,1
+            for child in children:
+                child.background_color = 1,1,1,1
+            if MyButton.stateLog != None and MyButton.stateLog.logs == []:
+                MyButton.Select_num = None
+                MyOp.Select_op = None
             MyButton.Select_num = None
             children = self.parent.parent.parent.ids.numbers.children
             if MyButton.stateLog != None and MyButton.stateLog.logs != []:
@@ -120,7 +138,7 @@ class MyOp(Button):
                     child.text = state.text
                     child.disabled = state.disabled
                     child.background_color = 1, 1, 1, 1
-
+            MyOp.Select_op = None
         elif MyButton.Select_num != None and MyOp.Select_op != self and MyOp.Select_op != None:
             #deselect old op and select new op
             MyOp.Select_op.background_color = 1, 1, 1, 1
@@ -134,7 +152,6 @@ class MyOp(Button):
             #deselect op
             self.background_color = 1,1,1,1
             MyOp.Select_op = None
-
 
 class MainApp(App):
     numbers = GoalCreation.goal_creation(1,5)
