@@ -141,6 +141,7 @@ class MainApp(App):
     num4 = NumericProperty(numbers[4])
     num5 = NumericProperty(numbers[5])
     num6 = NumericProperty(numbers[6])
+    title = '4op'
 
 if __name__ == '__main__':
     MainApp().run()
