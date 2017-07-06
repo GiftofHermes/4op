@@ -109,6 +109,7 @@ class MyOp(Button):
     def on_op_pressed(self):
         #Reverse last step from statelog
         if self.op == 5:
+            MyButton.Select_num = None
             children = self.parent.parent.parent.ids.numbers.children
             if MyButton.stateLog != None and MyButton.stateLog.logs != []:
                 print(MyButton.stateLog)
