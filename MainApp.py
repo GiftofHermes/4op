@@ -52,37 +52,46 @@ class MyButton(Button):
         # deselect number
         if MyButton.Select_num != None and MyButton.Select_num.num == self.num:
             MyButton.Select_num = None
-            MyOp.Select_op = 0
+            MyOp.Select_op.background_color = 1,1,1,1
+            MyOp.Select_op = None
             self.background_color = 1,1,1,1
         else:
             # do the math
-            if MyOp.Select_op != 0 and MyOp.Select_op != 5:
+            if MyOp.Select_op != None:
                 # save the num state
                 if MyButton.stateLog == None:
                     MyButton.stateLog = MyButtonStateLog()
                 MyButton.stateLog.add(self.parent.children)
-
+                MyButton.Select_num.background_color = 1,1,1,1
+                MyOp.Select_op.background_color = 1, 1, 1, 1
                 MyButton.Select_num.disabled = True
 
                 newValue = int(get_child(self.parent.children, MyButton.Select_num.num).text)
-                if(MyOp.Select_op == 1):
+                if(MyOp.Select_op.op == 1):
                     self.text = str(int(self.text) + newValue)
                     MyButton.Select_num = None
-                    MyOp.Select_op = 0
-                elif(MyOp.Select_op == 2):
+                    MyOp.Select_op = None
+                elif(MyOp.Select_op.op == 2):
                     #if does not substract properly abort or take abs
                     self.text = str(newValue - int(self.text))
                     MyButton.Select_num = None
-                    MyOp.Select_op = 0
-                elif(MyOp.Select_op == 3):
+                    MyOp.Select_op = None
+                elif(MyOp.Select_op.op == 3):
                     self.text = str(int(self.text) * newValue)
                     MyButton.Select_num = None
-                    MyOp.Select_op = 0
-                elif(MyOp.Select_op == 4):
-                    #to-do: if does not divide properly abort
-                    self.text = str(newValue / int(self.text))
-                    MyButton.Select_num = None
-                    MyOp.Select_op = 0
+                    MyOp.Select_op = None
+                elif(MyOp.Select_op.op == 4):
+                    if newValue % int(self.text) == 0:
+                        #is divisible
+                        self.text = str(newValue / int(self.text))
+                        MyButton.Select_num = None
+                        MyOp.Select_op = None
+                    else:
+                        #to-do: add screen shake to indicate not being divisible
+                        #is not divisible
+                        MyButton.Select_num.disabled = False
+                        MyButton.Select_num = None
+                        MyOp.Select_op = None
             # select
             else:
                 MyButton.Select_num = self
@@ -94,11 +103,13 @@ class MyButton(Button):
                 self.background_color = 1, 0, 0, 1
 
 class MyOp(Button):
-    Select_op = 0
+    Select_op = None
     def on_op_pressed(self):
+        #Reverse last step from statelog
         if self.op == 5:
             children = self.parent.parent.parent.ids.numbers.children
-            if MyButton.stateLog != None:
+            if MyButton.stateLog != None and MyButton.stateLog.logs != []:
+                print(MyButton.stateLog)
                 states = MyButton.stateLog.pop()
                 for state in states:
                     child = get_child(children, state.num)
@@ -106,8 +117,14 @@ class MyOp(Button):
                     child.text = state.text
                     child.disabled = state.disabled
                     child.background_color = 1, 1, 1, 1
-        elif MyButton.Select_num != None:
-            MyOp.Select_op = self.op
+        elif MyButton.Select_num != None and MyOp.Select_op != self:
+            #select op
+            MyOp.Select_op = self
+            self.background_color = 0,0,1,1
+        elif MyOp.Select_op == self:
+            #deselect op
+            self.background_color = 1,1,1,1
+            MyOp.Select_op = None
 
 
 class MainApp(App):

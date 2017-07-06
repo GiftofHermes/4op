@@ -60,22 +60,27 @@ BoxLayout:
             col_force_default:'True'
             padding: '5'
             MyOp:
+                id:1
                 op:1
                 text:'+'
                 on_release: self.on_op_pressed()
             MyOp:
+                id:2
                 op:2
                 text:'-'
                 on_release: self.on_op_pressed()
             MyOp:
+                id:3
                 op:3
                 text:'x'
                 on_release: self.on_op_pressed()
             MyOp:
+                id:4
                 op:4
                 text:'/'
                 on_release: self.on_op_pressed()
             MyOp:
+                id:5
                 op:5
-                text:'Break'
+                text: 'Reverse'
                 on_release: self.on_op_pressed()
