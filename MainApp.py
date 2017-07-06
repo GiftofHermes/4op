@@ -93,18 +93,14 @@ class MyButton(Button):
                         MyButton.Select_num.disabled = False
                         MyButton.Select_num = None
                         MyOp.Select_op = None
-            # select
+            # deselect old number and select new number
             elif MyOp.Select_op == None and MyButton.Select_num != self and MyButton.Select_num != None:
                 MyButton.Select_num.background_color = 1,1,1,1
                 MyButton.Select_num = self
                 self.background_color = 1,0,0,1
             else:
+                #select when nothing is selected
                 MyButton.Select_num = self
-                i = 1
-                while i < 6 :
-                    i+=1
-                    #self.parent.ids["num%d" % i].background_color = 1, 1, 1, 1
-
                 self.background_color = 1, 0, 0, 1
 
 class MyOp(Button):
@@ -122,10 +118,16 @@ class MyOp(Button):
                     child.text = state.text
                     child.disabled = state.disabled
                     child.background_color = 1, 1, 1, 1
+
+        elif MyButton.Select_num != None and MyOp.Select_op != self and MyOp.Select_op != None:
+            #deselect old op and select new op
+            MyOp.Select_op.background_color = 1, 1, 1, 1
+            MyOp.Select_op = self
+            self.background_color = 0, 0, 1, 1
         elif MyButton.Select_num != None and MyOp.Select_op != self:
             #select op
             MyOp.Select_op = self
-            self.background_color = 0,0,1,1
+            self.background_color = 0, 0, 1, 1
         elif MyOp.Select_op == self:
             #deselect op
             self.background_color = 1,1,1,1
