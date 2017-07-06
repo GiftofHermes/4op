@@ -53,8 +53,9 @@ class MyButton(Button):
         if MyButton.Select_num != None and MyButton.Select_num.num == self.num:
             MyButton.Select_num.background_color = 1,1,1,1
             MyButton.Select_num = None
-            MyOp.Select_op.background_color = 1,1,1,1
-            MyOp.Select_op = None
+            if MyOp.Select_op != None:
+                MyOp.Select_op.background_color = 1,1,1,1
+                MyOp.Select_op = None
             self.background_color = 1,1,1,1
         else:
             # do the math
