@@ -51,6 +51,7 @@ class MyButton(Button):
     def on_num_pressed(self):
         # deselect number
         if MyButton.Select_num != None and MyButton.Select_num.num == self.num:
+            MyButton.Select_num.background_color = 1,1,1,1
             MyButton.Select_num = None
             MyOp.Select_op.background_color = 1,1,1,1
             MyOp.Select_op = None
@@ -83,7 +84,7 @@ class MyButton(Button):
                 elif(MyOp.Select_op.op == 4):
                     if newValue % int(self.text) == 0:
                         #is divisible
-                        self.text = str(newValue / int(self.text))
+                        self.text = str(int(newValue / int(self.text)))
                         MyButton.Select_num = None
                         MyOp.Select_op = None
                     else:
@@ -93,6 +94,10 @@ class MyButton(Button):
                         MyButton.Select_num = None
                         MyOp.Select_op = None
             # select
+            elif MyOp.Select_op == None and MyButton.Select_num != self and MyButton.Select_num != None:
+                MyButton.Select_num.background_color = 1,1,1,1
+                MyButton.Select_num = self
+                self.background_color = 1,0,0,1
             else:
                 MyButton.Select_num = self
                 i = 1
