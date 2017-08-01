@@ -74,6 +74,7 @@ class MyButton(Button):
                     self.text = str(int(self.text) + newValue)
                     MyButton.Select_num = None
                     MyOp.Select_op = None
+
                 elif(MyOp.Select_op.op == 2):
                     #if does not substract properly abort or take abs
                     self.text = str(newValue - int(self.text))
@@ -106,6 +107,9 @@ class MyButton(Button):
                          MyOp.Select_op = None
                          if (MyButtonStateLog.logs != []):
                              MyButton.stateLog.pop()
+
+                if GoalCheck.goal_check(goal_num, int(self.text)):
+                    print("you win")
 
             # deselect old number and select new number
             elif MyOp.Select_op == None and MyButton.Select_num != self and MyButton.Select_num != None:
@@ -160,7 +164,9 @@ class MyOp(Button):
 
 class MainApp(App):
     numbers = GoalCreation.goal_creation(1,5)
+    global goal_num
     goal = NumericProperty(numbers[0])
+    goal_num = numbers[0]
     num1 = NumericProperty(numbers[1])
     num2 = NumericProperty(numbers[2])
     num3 = NumericProperty(numbers[3])
